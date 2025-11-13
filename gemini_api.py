@@ -22,22 +22,6 @@ client = genai.Client(api_key=api_key)
 today = date.today()
 current_date = today.strftime("%Y-%m-%d")
 
-# 간단한 요청(예제)
-response = client.models.generate_content(
-    model="gemini-2.5-flash",
-    contents=f"Today is {current_date}. How many days until Christmas?",
-)
-print(response.text)
-
-print("-----")
-
-# 간단한 요청(예제)
-response = client.models.generate_content(
-    model="gemini-2.5-flash",
-    contents=f"What is the weather usually like around that time?",
-)
-print(response.text)
-
 # Make a loop that asks for the user's input and sends it to the model until the user types 'exit'
 while True:
     user_input = input("You: ")
