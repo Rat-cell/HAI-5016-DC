@@ -29,9 +29,23 @@ response = client.models.generate_content(
 )
 print(response.text)
 
+print("-----")
+
 # 간단한 요청(예제)
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents=f"What is the weather usually like around that time?",
 )
 print(response.text)
+
+# Make a loop that asks for the user's input and sends it to the model until the user types 'exit'
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'exit':
+        break
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=user_input,
+    )
+    print("Gemini:", response.text)
