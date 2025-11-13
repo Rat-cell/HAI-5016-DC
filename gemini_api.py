@@ -21,6 +21,11 @@ client = genai.Client(api_key=api_key)
 # Get current date
 today = date.today()
 current_date = today.strftime("%Y-%m-%d")
+# Create and seed the conversation history
+conversation_history = [{
+    "role": "user",
+    "parts": [{"text": f"You are a helpful assistant. Today's date is {current_date}."}]
+}]
 
 # Make a loop that asks for the user's input and sends it to the model until the user types 'exit'
 while True:
@@ -28,8 +33,18 @@ while True:
     if user_input.lower() == 'exit':
         break
 
+    conversation_history.append({
+        "role": "user",
+        "parts": [{"text": user_input}]
+    })
+
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=user_input,
+        contents=conversation_history,
     )
+
+    conversation_history.append({
+        "role": "model",
+        "parts": [{"text": response.text}]
+    })
     print("Gemini:", response.text)
